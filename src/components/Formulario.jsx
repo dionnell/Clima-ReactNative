@@ -9,14 +9,14 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
     const [ animacionboton ] = useState(new Animated.Value(1))
 
     const consultarClima = () => {
-        if(pais.trim() === '' || ciudad.trim() === ''){
+        if(paisForm.trim() === '' || ciudadForm.trim() === ''){
             mostrarAlerta()
             return
         }
         //consultar la API
         setConsultar(true)
-
     }
+
     const mostrarAlerta = () => {
         Alert.alert(
             'Error',
@@ -24,9 +24,11 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
             [{text: 'Entendido'}]
         )
     }
+
     const animacionEntrada = () => {
         Animated.spring(animacionboton, {
-            toValue: .9
+            toValue: .8,
+            useNativeDriver: true,
         }).start()
     }
 
@@ -34,7 +36,8 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
          Animated.spring(animacionboton, {
             toValue: 1,
             friction: 3,
-            tension: 30
+            tension: 30,
+            useNativeDriver: true,
         }).start()
     }
 
@@ -50,7 +53,7 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
             <View>
                 <TextInput
                     value={ciudad}
-                    onChangeText={ciudad => setBusqueda({...busqueda, ciudad})}
+                    onChangeText={ ciudad => setBusqueda({ ...busqueda, ciudad })}
                     style={styles.input}
                     placeholder='Ciudad'
                     placeholderTextColor={'#666'}
@@ -61,7 +64,8 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
                 <Picker
                     style={styles.inputPicker}
                     selectedValue={pais}
-                    onValueChange={pais => setBusqueda({...busqueda, pais})}
+                    dropdownIconColor='#64748B'
+                    onValueChange={pais => setBusqueda({ ...busqueda, pais})}
                 >
                     <Picker.Item label='- Seleccione un pais -' value='' />
                     <Picker.Item label='Alemania' value='DE' />
@@ -101,7 +105,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         marginTop: 3,
         color: '#64748B',
-        height: 120
+        height: 60,
+        fontWeight: 'bold'
     },
     input:{
         padding: 10,

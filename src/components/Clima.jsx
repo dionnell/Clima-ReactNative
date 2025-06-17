@@ -5,8 +5,8 @@ import { FormatToCentigrados } from '../helper/FormatToCentigrados'
 export const Clima = ({resultado}) => {
 
   const {name, main} = resultado
-
-  if(!name) return (<></>)
+console.log(main)
+  if(!name) return null
    
   return (
     <>

@@ -1,9 +1,9 @@
-import { Alert, Keyboard, StyleSheet, View } from 'react-native';
-import { Formulario } from './src/components/Formulario';
-import { TouchableWithoutFeedback } from 'react-native/types_generated/index';
 import { useEffect, useState } from 'react';
+import { Alert, Keyboard, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { Formulario } from './src/components/Formulario';
 import { Clima } from './src/components/Clima';
 import { FormatToCentigrados } from './src/helper/FormatToCentigrados';
+import LinearGradient from 'react-native-linear-gradient';
 
 const App = () => {
 
@@ -13,7 +13,7 @@ const App = () => {
   })
   const [consultar, setConsultar] = useState(false)
   const [resultado, setResultado] = useState({})
-  const [bgcolor, setBgcolor] = useState('rgb(71, 149, 212)')
+  const [bgcolor, setBgcolor] = useState(['#4c669f', '#3b5998', '#192f6a'])
 
   const { ciudad, pais } = busqueda
 
@@ -35,11 +35,11 @@ const App = () => {
           const actual = FormatToCentigrados(main.temp)
 
           if( actual < 10 ){
-            setBgcolor('rgb(105, 100, 149)')
+            setBgcolor(['#DE64DE', '#B68FFF', '#FFFEF5'])
           } else if( actual >= 10 && actual < 25 ){
-            setBgcolor('rgb(71, 149, 212)')
+            setBgcolor(['#73D7FF', '#8FFFFF', '#FFFEF5'])
           }else{
-            setBgcolor('rgb(178, 28, 61)')
+            setBgcolor(['#FF3030', '#FF8F8F', '#FFFEF5'])
           }
 
         } catch (error) {
@@ -71,7 +71,11 @@ const App = () => {
       <TouchableWithoutFeedback
         onPress={() => ocultarTeclado()}
       >
-        <View style={[styles.app, bgColorApp]}>
+        <LinearGradient 
+          start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}}
+          style={[styles.app]}
+          colors={bgcolor}
+        >
           <View style={styles.contenido}>
             <Clima
               resultado={resultado}
@@ -83,7 +87,7 @@ const App = () => {
             />
 
           </View>
-        </View>
+        </LinearGradient>
       </TouchableWithoutFeedback>
     </>
   );

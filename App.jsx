@@ -1,15 +1,90 @@
-import { StyleSheet, View } from 'react-native';
+import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import { Formulario } from './src/components/Formulario';
+import { TouchableWithoutFeedback } from 'react-native/types_generated/index';
+import { useEffect, useState } from 'react';
+import { Clima } from './src/components/Clima';
+import { FormatToCentigrados } from './src/helper/FormatToCentigrados';
 
 const App = () => {
 
+  const [busqueda, setBusqueda] = useState({
+    ciudad: '',
+    pais: ''
+  })
+  const [consultar, setConsultar] = useState(false)
+  const [resultado, setResultado] = useState({})
+  const [bgcolor, setBgcolor] = useState('rgb(71, 149, 212)')
+
+  const { ciudad, pais } = busqueda
+
+  useEffect( () => {
+    const consultarClima = async () => {
+      if(consultar){
+        const APIkey = '67cc9c4841454880b9770bbc4ee9cc24'
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${APIkey}` 
+
+        try {
+          const respuesta = await fetch(url)
+          const resultado = await respuesta.json()
+
+          setResultado(resultado)
+          setConsultar(false)
+
+          //Modifica los colores de fondo basado en la temperatura
+          const {main} = resultado
+          const actual = FormatToCentigrados(main.temp)
+
+          if( actual < 10 ){
+            setBgcolor('rgb(105, 100, 149)')
+          } else if( actual >= 10 && actual < 25 ){
+            setBgcolor('rgb(71, 149, 212)')
+          }else{
+            setBgcolor('rgb(178, 28, 61)')
+          }
+
+        } catch (error) {
+          mostrarAlerta()
+        }
+      }
+    }
+    consultarClima()
+  }, [consultar])
+  
+  const mostrarAlerta = () => {
+    Alert.alert(
+        'Error',
+        'No hay resultados, intenta con otra ciudad o pais',
+        [{text: 'OK'}]
+    )
+  }
+
+  const ocultarTeclado = () => {
+    Keyboard.dismiss()
+  }
+
+  const bgColorApp = {
+    backgroundColor: bgcolor
+  }
+
   return (
     <>
-      <View style={styles.app}>
-        <View style={styles.contenido}>
-          <Formulario/>
+      <TouchableWithoutFeedback
+        onPress={() => ocultarTeclado()}
+      >
+        <View style={[styles.app, bgColorApp]}>
+          <View style={styles.contenido}>
+            <Clima
+              resultado={resultado}
+            />
+            <Formulario
+              busqueda={busqueda}
+              setBusqueda={setBusqueda}
+              setConsultar={setConsultar}
+            />
+
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -17,10 +92,10 @@ const App = () => {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: 'rgb(71, 149, 212)'
+    justifyContent: 'center'
   },
   contenido: {
-
+    marginHorizontal: '2.5%'
   }
 });
 

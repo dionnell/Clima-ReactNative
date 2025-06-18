@@ -74,7 +74,7 @@ const App = () => {
         <LinearGradient 
           start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}}
           style={[styles.app]}
-          colors={bgcolor}
+          colors={bgColorApp.backgroundColor}
         >
           <View style={styles.contenido}>
             <Clima

@@ -45,8 +45,6 @@ export const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
         transform: [{scale: animacionboton}]
     }
 
-    
-
   return (
     <>
         <View style={styles.formulario}>

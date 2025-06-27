@@ -1,24 +1,35 @@
-# Aplicacion Movil Clima
+# App Clima React Native
 
-Esta aplicacion hecha con react native, cosumimos la API de "openweathermap" usando Fetch. En un formulario conpuesto de un Pickers donde  seleccionamos el pais y un TextInput donde escribimos la ciudad, presionamos el boton y la App nos entrega toda la informacion correspondiente de al clima, segun los datos que nos entrega la API, y el fondo cambia de color segun el rango de temperatura
+Esta aplicación móvil permite consultar el clima actual de cualquier ciudad del mundo utilizando la API de OpenWeatherMap.
 
-## Step 1: using app
+## Funcionalidades
 
-```sh
-# Using npm
-npm start
+- **Búsqueda de clima:** Ingresa el nombre de una ciudad y un país para obtener el clima actual.
+- **Visualización de datos:** Muestra información relevante como temperatura, condiciones y otros datos meteorológicos.
+- **Cambio dinámico de fondo:** El fondo de la app cambia de color según la temperatura actual (frío, templado o cálido).
+- **Validación y alertas:** Si no se encuentra la ciudad o país, muestra una alerta amigable.
+- **Interfaz amigable:** Utiliza gradientes y componentes visuales modernos para una mejor experiencia de usuario.
+- **Ocultamiento del teclado:** El teclado se oculta automáticamente al tocar fuera del formulario.
 
-# OR using Yarn
-yarn start
-```
+## Tecnologías utilizadas
 
-## Step 2: Build and run your app
+- React Native
+- React Native Linear Gradient
+- API de OpenWeatherMap
 
+## Estructura principal
 
-```sh
-# Using npm
-npm run android
+- `App.jsx`: Componente principal que gestiona el estado y la lógica de la aplicación.
+- `src/components/Formulario.jsx`: Formulario para ingresar ciudad y país.
+- `src/components/Clima.jsx`: Muestra los datos del clima.
+- `src/helper/FormatToCentigrados.js`: Función para convertir la temperatura a grados centígrados.
 
-# OR using Yarn
-yarn android
-```
+## Configuración
+
+1. Clona este repositorio.
+2. Instala las dependencias con `npm install`.
+3. Ejecuta la app en tu emulador o dispositivo físico con `npx react-native run-android` o `npx react-native run-ios`.
+4. Asegúrate de tener una API key válida de OpenWeatherMap.
+
+---
+
